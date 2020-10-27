@@ -1,5 +1,6 @@
 # Faker
-Faker will be a replacement for https://github.com/fzaninotto/Faker.
+Faker will be a replacement for https://github.com/fzaninotto/Faker, which is sadly not maintained anymore and archived.
+Read more here: https://marmelab.com/blog/2020/10/21/sunsetting-faker.html
 
 The main goals are:
 - PHP 8 support
