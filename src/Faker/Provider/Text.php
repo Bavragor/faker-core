@@ -29,9 +29,8 @@ abstract class Text extends Base
      * The minimum is 1, and it produces a higher level of randomness, although the
      * generated text usually doesn't make sense. Higher index sizes (up to 5)
      * produce more correct text, at the price of less randomness.
-     * @return string
      */
-    public function realText($maxNbChars = 200, $indexSize = 2)
+    public function realText(int $maxNbChars = 200, int $indexSize = 2): string
     {
         if ($maxNbChars < 10) {
             throw new \InvalidArgumentException('maxNbChars must be at least 10');

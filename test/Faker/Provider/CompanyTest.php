@@ -9,10 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 final class CompanyTest extends TestCase
 {
-    /**
-     * @var Generator
-     */
-    private $faker;
+    private Generator $faker;
 
     protected function setUp(): void
     {
@@ -22,7 +19,7 @@ final class CompanyTest extends TestCase
         $this->faker = $faker;
     }
 
-    public function testJobTitle()
+    public function testJobTitle(): void
     {
         $jobTitle = $this->faker->jobTitle();
         $pattern = '/^[A-Za-z]+$/';

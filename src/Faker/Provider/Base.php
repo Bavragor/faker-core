@@ -2,25 +2,20 @@
 
 namespace Faker\Provider;
 
+use Closure;
 use Faker\DefaultGenerator;
 use Faker\Generator;
 use Faker\UniqueGenerator;
 use Faker\ValidGenerator;
+use Traversable;
 
 class Base
 {
-    /**
-     * @var \Faker\Generator
-     */
-    protected $generator;
+    protected \Faker\Generator $generator;
+
+    protected \Faker\UniqueGenerator $unique;
 
     /**
-     * @var \Faker\UniqueGenerator
-     */
-    protected $unique;
-
-    /**
-     * @param \Faker\Generator $generator
      */
     public function __construct(Generator $generator)
     {
@@ -29,31 +24,24 @@ class Base
 
     /**
      * Returns a random number between 0 and 9
-     *
-     * @return int
      */
-    public static function randomDigit()
+    public static function randomDigit(): int
     {
         return mt_rand(0, 9);
     }
 
     /**
      * Returns a random number between 1 and 9
-     *
-     * @return int
      */
-    public static function randomDigitNotNull()
+    public static function randomDigitNotNull(): int
     {
         return mt_rand(1, 9);
     }
 
     /**
      * Generates a random digit, which cannot be $except
-     *
-     * @param int $except
-     * @return int
      */
-    public static function randomDigitNot($except)
+    public static function randomDigitNot(int $except): int
     {
         $result = self::numberBetween(0, 8);
         if ($result >= $except) {
@@ -70,14 +58,9 @@ class Base
      * @param int $nbDigits Defaults to a random number between 1 and 9
      * @param bool $strict Whether the returned number should have exactly $nbDigits
      * @example 79907610
-     *
-     * @return int
      */
-    public static function randomNumber($nbDigits = null, $strict = false)
+    public static function randomNumber(?int $nbDigits = null, bool $strict = false): int
     {
-        if (!is_bool($strict)) {
-            throw new \InvalidArgumentException('randomNumber() generates numbers of fixed width. To generate numbers between two boundaries, use numberBetween() instead.');
-        }
         if (null === $nbDigits) {
             $nbDigits = static::randomDigitNotNull();
         }
@@ -95,14 +78,11 @@ class Base
     /**
      * Return a random float number
      *
-     * @param int       $nbMaxDecimals
      * @param int|float $min
      * @param int|float $max
      * @example 48.8932
-     *
-     * @return float
      */
-    public static function randomFloat($nbMaxDecimals = null, $min = 0, $max = null)
+    public static function randomFloat(?int $nbMaxDecimals = null, $min = 0, $max = null): float
     {
         if (null === $nbMaxDecimals) {
             $nbMaxDecimals = static::randomDigit();
@@ -130,10 +110,8 @@ class Base
      * @param int $int1 default to 0
      * @param int $int2 defaults to 32 bit max integer, ie 2147483647
      * @example 79907610
-     *
-     * @return int
      */
-    public static function numberBetween($int1 = 0, $int2 = 2147483647)
+    public static function numberBetween(int $int1 = 0, int $int2 = 2147483647): int
     {
         $min = $int1 < $int2 ? $int1 : $int2;
         $max = $int1 < $int2 ? $int2 : $int1;
@@ -154,10 +132,8 @@ class Base
 
     /**
      * Returns a random letter from a to z
-     *
-     * @return string
      */
-    public static function randomLetter()
+    public static function randomLetter(): string
     {
         return chr(mt_rand(97, 122));
     }
@@ -173,14 +149,14 @@ class Base
     /**
      * Returns randomly ordered subsequence of $count elements from a provided array
      *
-     * @param  array            $array           Array to take elements from. Defaults to a-c
+     * @param Traversable|array            $array           Array to take elements from. Defaults to a-c
      * @param int $count Number of elements to take.
      * @param bool $allowDuplicates Allow elements to be picked several times. Defaults to false
      * @throws \LengthException When requesting more elements than provided
      *
      * @return array New array with $count elements from $array
      */
-    public static function randomElements($array = ['a', 'b', 'c'], $count = 1, $allowDuplicates = false)
+    public static function randomElements($array = ['a', 'b', 'c'], int $count = 1, bool $allowDuplicates = false): array
     {
         $traversables = [];
 
@@ -223,7 +199,7 @@ class Base
     /**
      * Returns a random element from a passed array
      *
-     * @param  array $array
+     * @param  Traversable|array $array
      * @return mixed
      */
     public static function randomElement($array = ['a', 'b', 'c'])
@@ -231,6 +207,7 @@ class Base
         if (!$array || ($array instanceof \Traversable && !count($array))) {
             return null;
         }
+
         $elements = static::randomElements($array, 1);
 
         return $elements[0];
@@ -242,7 +219,7 @@ class Base
      * @param  array $array
      * @return int|string|null
      */
-    public static function randomKey($array = [])
+    public static function randomKey(array $array = [])
     {
         if (!$array) {
             return null;
@@ -291,7 +268,7 @@ class Base
      * @param array $array The set to shuffle
      * @return array The shuffled set
      */
-    public static function shuffleArray($array = [])
+    public static function shuffleArray(array $array = []): array
     {
         $shuffledArray = [];
         $i = 0;
@@ -330,7 +307,7 @@ class Base
      * @param string $encoding The string encoding (defaults to UTF-8)
      * @return string The shuffled set
      */
-    public static function shuffleString($string = '', $encoding = 'UTF-8')
+    public static function shuffleString(string $string = '', string $encoding = 'UTF-8'): string
     {
         if (function_exists('mb_strlen')) {
             // UTF8-safe str_split()
@@ -363,9 +340,8 @@ class Base
      * Replaces all percentage sign ('%') occurrences with a not null number
      *
      * @param  string $string String that needs to bet parsed
-     * @return string
      */
-    public static function numerify($string = '###')
+    public static function numerify(string $string = '###'): string
     {
         // instead of using randomDigit() several times, which is slow,
         // count the number of hashes and generate once a large number
@@ -399,9 +375,8 @@ class Base
      * Replaces all question mark ('?') occurrences with a random letter
      *
      * @param  string $string String that needs to bet parsed
-     * @return string
      */
-    public static function lexify($string = '????')
+    public static function lexify(string $string = '????'): string
     {
         return self::replaceWildcard($string, '?', 'static::randomLetter');
     }
@@ -411,9 +386,8 @@ class Base
      * An asterisk ('*') is replaced with either a random number or a random letter
      *
      * @param  string $string String that needs to bet parsed
-     * @return string
      */
-    public static function bothify($string = '## ??')
+    public static function bothify(string $string = '## ??'): string
     {
         $string = self::replaceWildcard(
             $string,
@@ -431,9 +405,8 @@ class Base
      * @example $faker->asciify(''********'); // "s5'G!uC3"
      *
      * @param  string $string String that needs to bet parsed
-     * @return string
      */
-    public static function asciify($string = '****')
+    public static function asciify(string $string = '****'): string
     {
         return preg_replace_callback('/\*/u', 'static::randomAscii', $string);
     }
@@ -462,9 +435,8 @@ class Base
      * @see https://github.com/icomefromthenet/ReverseRegex for a more robust implementation
      *
      * @param string $regex A regular expression (delimiters are optional)
-     * @return string
      */
-    public static function regexify($regex = '')
+    public static function regexify(string $regex = ''): string
     {
         // ditch the anchors
         $regex = preg_replace('/^\/?\^?/', '', $regex);
@@ -544,9 +516,8 @@ class Base
      * Uses mb_string extension if available.
      *
      * @param  string $string String that should be converted to lowercase
-     * @return string
      */
-    public static function toLower($string = '')
+    public static function toLower(string $string = ''): string
     {
         return extension_loaded('mbstring') ? mb_strtolower($string, 'UTF-8') : strtolower($string);
     }
@@ -556,9 +527,8 @@ class Base
      * Uses mb_string extension if available.
      *
      * @param  string $string String that should be converted to uppercase
-     * @return string
      */
-    public static function toUpper($string = '')
+    public static function toUpper(string $string = ''): string
     {
         return extension_loaded('mbstring') ? mb_strtoupper($string, 'UTF-8') : strtoupper($string);
     }
@@ -603,9 +573,9 @@ class Base
      *
      * @return UniqueGenerator A proxy class returning only non-existing values
      */
-    public function unique($reset = false, $maxRetries = 10000)
+    public function unique(bool $reset = false, int $maxRetries = 10000): UniqueGenerator
     {
-        if ($reset || !$this->unique) {
+        if ($reset || !isset($this->unique)) {
             $this->unique = new UniqueGenerator($this->generator, $maxRetries);
         }
 
@@ -635,7 +605,7 @@ class Base
      *
      * @return ValidGenerator A proxy class returning only valid values
      */
-    public function valid($validator = null, $maxRetries = 10000)
+    public function valid(?Closure $validator = null, int $maxRetries = 10000): ValidGenerator
     {
         return new ValidGenerator($this->generator, $validator, $maxRetries);
     }

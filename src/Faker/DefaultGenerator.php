@@ -16,22 +16,20 @@ class DefaultGenerator
     }
 
     /**
-     * @param string $attribute
      *
      * @return mixed
      */
-    public function __get($attribute)
+    public function __get(string $attribute)
     {
         return $this->default;
     }
 
     /**
-     * @param string $method
      * @param array $attributes
      *
      * @return mixed
      */
-    public function __call($method, $attributes)
+    public function __call(string $method, array $attributes)
     {
         return $this->default;
     }

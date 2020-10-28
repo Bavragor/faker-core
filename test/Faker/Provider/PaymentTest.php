@@ -27,6 +27,7 @@ final class PaymentTest extends TestCase
 
     public function localeDataProvider()
     {
+        $locales = [];
         $providerPath = realpath(__DIR__ . '/../../../src/Faker/Provider');
         $localePaths = array_filter(glob($providerPath . '/*', GLOB_ONLYDIR));
         foreach ($localePaths as $path) {
@@ -37,7 +38,7 @@ final class PaymentTest extends TestCase
         return $locales;
     }
 
-    public function loadLocalProviders($locale)
+    public function loadLocalProviders($locale): void
     {
         $providerPath = realpath(__DIR__ . '/../../../src/Faker/Provider');
         if (file_exists($providerPath.'/'.$locale.'/Payment.php')) {
@@ -46,7 +47,7 @@ final class PaymentTest extends TestCase
         }
     }
 
-    public function testCreditCardTypeReturnsValidVendorName()
+    public function testCreditCardTypeReturnsValidVendorName(): void
     {
         $this->assertContains($this->faker->creditCardType, ['Visa', 'Visa Retired', 'MasterCard', 'American Express', 'Discover Card']);
     }
@@ -76,26 +77,26 @@ final class PaymentTest extends TestCase
     /**
      * @dataProvider creditCardNumberProvider
      */
-    public function testCreditCardNumberReturnsValidCreditCardNumber($type, $regexp)
+    public function testCreditCardNumberReturnsValidCreditCardNumber($type, $regexp): void
     {
         $cardNumber = $this->faker->creditCardNumber($type);
         $this->assertMatchesRegularExpression($regexp, $cardNumber);
         $this->assertTrue(Luhn::isValid($cardNumber));
     }
 
-    public function testCreditCardNumberCanFormatOutput()
+    public function testCreditCardNumberCanFormatOutput(): void
     {
         $this->assertMatchesRegularExpression('/^6011-\d{4}-\d{4}-\d{4}$/', $this->faker->creditCardNumber('Discover Card', true));
     }
 
-    public function testCreditCardExpirationDateReturnsValidDateByDefault()
+    public function testCreditCardExpirationDateReturnsValidDateByDefault(): void
     {
         $expirationDate = $this->faker->creditCardExpirationDate;
         $this->assertTrue(intval($expirationDate->format('U')) > strtotime('now'));
         $this->assertTrue(intval($expirationDate->format('U')) < strtotime('+36 months'));
     }
 
-    public function testRandomCard()
+    public function testRandomCard(): void
     {
         $cardDetails = $this->faker->creditCardDetails;
         $this->assertEquals(count($cardDetails), 4);
@@ -170,7 +171,7 @@ final class PaymentTest extends TestCase
     /**
      * @dataProvider localeDataProvider
      */
-    public function testBankAccountNumber($locale)
+    public function testBankAccountNumber($locale): void
     {
         $parts = explode('_', $locale);
         $countryCode = array_pop($parts);
@@ -212,7 +213,7 @@ final class PaymentTest extends TestCase
     /**
      * @dataProvider ibanFormatProvider
      */
-    public function testIban($countryCode, $regex)
+    public function testIban($countryCode, $regex): void
     {
         $iban = $this->faker->iban($countryCode);
 

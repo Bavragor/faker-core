@@ -36,7 +36,7 @@ final class InnTest extends TestCase
     /**
      * @dataProvider checksumProvider
      */
-    public function testChecksum($inn, $checksum)
+    public function testChecksum($inn, $checksum): void
     {
         $this->assertEquals($checksum, Inn::checksum($inn), $inn);
     }
@@ -79,7 +79,7 @@ final class InnTest extends TestCase
     /**
      * @dataProvider validatorProvider
      */
-    public function testIsValid($inn, $isValid)
+    public function testIsValid($inn, $isValid): void
     {
         $this->assertEquals($isValid, Inn::isValid($inn), $inn);
     }

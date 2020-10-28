@@ -11,7 +11,7 @@ final class PersonTest extends TestCase
     /**
      * @dataProvider firstNameProvider
      */
-    public function testFirstName($gender, $expected)
+    public function testFirstName($gender, $expected): void
     {
         $faker = new Generator();
         $faker->addProvider(new Person($faker));
@@ -46,12 +46,12 @@ final class PersonTest extends TestCase
         ];
     }
 
-    public function testFirstNameMale()
+    public function testFirstNameMale(): void
     {
         $this->assertContains(Person::firstNameMale(), ['John']);
     }
 
-    public function testFirstNameFemale()
+    public function testFirstNameFemale(): void
     {
         $this->assertContains(Person::firstNameFemale(), ['Jane']);
     }
@@ -59,7 +59,7 @@ final class PersonTest extends TestCase
     /**
      * @dataProvider titleProvider
      */
-    public function testTitle($gender, $expected)
+    public function testTitle($gender, $expected): void
     {
         $faker = new Generator();
         $faker->addProvider(new Person($faker));
@@ -112,24 +112,24 @@ final class PersonTest extends TestCase
         ];
     }
 
-    public function testTitleMale()
+    public function testTitleMale(): void
     {
         $this->assertContains(Person::titleMale(), ['Mr.', 'Dr.', 'Prof.']);
     }
 
-    public function testTitleFemale()
+    public function testTitleFemale(): void
     {
         $this->assertContains(Person::titleFemale(), ['Mrs.', 'Ms.', 'Miss', 'Dr.', 'Prof.']);
     }
 
-    public function testLastNameReturnsDoe()
+    public function testLastNameReturnsDoe(): void
     {
         $faker = new Generator();
         $faker->addProvider(new Person($faker));
         $this->assertEquals($faker->lastName(), 'Doe');
     }
 
-    public function testNameReturnsFirstNameAndLastName()
+    public function testNameReturnsFirstNameAndLastName(): void
     {
         $faker = new Generator();
         $faker->addProvider(new Person($faker));

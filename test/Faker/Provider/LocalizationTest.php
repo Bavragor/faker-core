@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 final class LocalizationTest extends TestCase
 {
-    public function testLocalizedNameProvidersDoNotThrowErrors()
+    public function testLocalizedNameProvidersDoNotThrowErrors(): void
     {
         foreach (glob(__DIR__ . '/../../../src/Faker/Provider/*/Person.php') as $localizedPerson) {
             preg_match('#/([a-zA-Z_]+)/Person\.php#', $localizedPerson, $matches);
@@ -16,7 +16,7 @@ final class LocalizationTest extends TestCase
         }
     }
 
-    public function testLocalizedAddressProvidersDoNotThrowErrors()
+    public function testLocalizedAddressProvidersDoNotThrowErrors(): void
     {
         foreach (glob(__DIR__ . '/../../../src/Faker/Provider/*/Address.php') as $localizedAddress) {
             preg_match('#/([a-zA-Z_]+)/Address\.php#', $localizedAddress, $matches);

@@ -65,7 +65,7 @@ final class LuhnTest extends TestCase
     /**
      * @dataProvider checkDigitProvider
      */
-    public function testComputeCheckDigit($partialNumber, $checkDigit)
+    public function testComputeCheckDigit($partialNumber, $checkDigit): void
     {
         $this->assertIsString($checkDigit);
         $this->assertEquals($checkDigit, Luhn::computeCheckDigit($partialNumber));
@@ -114,26 +114,18 @@ final class LuhnTest extends TestCase
                 '79927398719',
                 false,
             ],
-            [
-                79927398713,
-                true,
-            ],
-            [
-                79927398714,
-                false,
-            ],
         ];
     }
 
     /**
      * @dataProvider validatorProvider
      */
-    public function testIsValid($number, $isValid)
+    public function testIsValid($number, $isValid): void
     {
         $this->assertEquals($isValid, Luhn::isValid($number));
     }
 
-    public function testGenerateLuhnNumberWithInvalidPrefix()
+    public function testGenerateLuhnNumberWithInvalidPrefix(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Argument should be an integer.');

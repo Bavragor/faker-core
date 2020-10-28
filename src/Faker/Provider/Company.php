@@ -12,10 +12,8 @@ class Company extends Base
 
     /**
      * @example 'Acme Ltd'
-     *
-     * @return string
      */
-    public function company()
+    public function company(): string
     {
         $format = static::randomElement(static::$formats);
 
@@ -24,20 +22,16 @@ class Company extends Base
 
     /**
      * @example 'Ltd'
-     *
-     * @return string
      */
-    public static function companySuffix()
+    public static function companySuffix(): string
     {
         return static::randomElement(static::$companySuffix);
     }
 
     /**
      * @example 'Job'
-     *
-     * @return string
      */
-    public function jobTitle()
+    public function jobTitle(): string
     {
         $format = static::randomElement(static::$jobTitleFormat);
 

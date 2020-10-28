@@ -258,9 +258,8 @@ class Lorem extends Base
 
     /**
      * @example 'Lorem'
-     * @return string
      */
-    public static function word()
+    public static function word(): string
     {
         return static::randomElement(static::$wordList);
     }
@@ -273,7 +272,7 @@ class Lorem extends Base
      * @param  bool         $asText if true the sentences are returned as one string
      * @return array|string
      */
-    public static function words($nb = 3, $asText = false)
+    public static function words(int $nb = 3, bool $asText = false)
     {
         $words = [];
         for ($i = 0; $i < $nb; $i++) {
@@ -290,9 +289,8 @@ class Lorem extends Base
      * @param int $nbWords around how many words the sentence should contain
      * @param bool $variableNbWords set to false if you want exactly $nbWords returned,
      * otherwise $nbWords may vary by +/-40% with a minimum of 1
-     * @return string
      */
-    public static function sentence($nbWords = 6, $variableNbWords = true)
+    public static function sentence(int $nbWords = 6, bool $variableNbWords = true): string
     {
         if ($nbWords <= 0) {
             return '';
@@ -315,7 +313,7 @@ class Lorem extends Base
      * @param  bool         $asText if true the sentences are returned as one string
      * @return array|string
      */
-    public static function sentences($nb = 3, $asText = false)
+    public static function sentences(int $nb = 3, bool $asText = false)
     {
         $sentences = [];
         for ($i = 0; $i < $nb; $i++) {
@@ -332,9 +330,8 @@ class Lorem extends Base
      * @param int $nbSentences around how many sentences the paragraph should contain
      * @param bool $variableNbSentences set to false if you want exactly $nbSentences returned,
      * otherwise $nbSentences may vary by +/-40% with a minimum of 1
-     * @return string
      */
-    public static function paragraph($nbSentences = 3, $variableNbSentences = true)
+    public static function paragraph(int $nbSentences = 3, bool $variableNbSentences = true): string
     {
         if ($nbSentences <= 0) {
             return '';
@@ -354,7 +351,7 @@ class Lorem extends Base
      * @param  bool         $asText if true the paragraphs are returned as one string, separated by two newlines
      * @return array|string
      */
-    public static function paragraphs($nb = 3, $asText = false)
+    public static function paragraphs(int $nb = 3, bool $asText = false)
     {
         $paragraphs = [];
         for ($i = 0; $i < $nb; $i++) {
@@ -371,10 +368,8 @@ class Lorem extends Base
      * @example 'Sapiente sunt omnis. Ut pariatur ad autem ducimus et. Voluptas rem voluptas sint modi dolorem amet.'
      *
      * @param int $maxNbChars Maximum number of characters the text should contain (minimum 5)
-     *
-     * @return string
      */
-    public static function text($maxNbChars = 200)
+    public static function text(int $maxNbChars = 200): string
     {
         if ($maxNbChars < 5) {
             throw new \InvalidArgumentException('text() can only generate text of at least 5 characters');

@@ -17,7 +17,7 @@ final class AddressTest extends TestCase
         $this->faker = $faker;
     }
 
-    public function testLatitude()
+    public function testLatitude(): void
     {
         $latitude = $this->faker->latitude();
         $this->assertIsFloat($latitude);
@@ -25,7 +25,7 @@ final class AddressTest extends TestCase
         $this->assertLessThanOrEqual(90, $latitude);
     }
 
-    public function testLongitude()
+    public function testLongitude(): void
     {
         $longitude = $this->faker->longitude();
         $this->assertIsFloat($longitude);
@@ -33,7 +33,7 @@ final class AddressTest extends TestCase
         $this->assertLessThanOrEqual(180, $longitude);
     }
 
-    public function testCoordinate()
+    public function testCoordinate(): void
     {
         $coordinate = $this->faker->localCoordinates();
         $this->assertIsArray($coordinate);

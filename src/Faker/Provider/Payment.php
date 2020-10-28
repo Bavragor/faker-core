@@ -30,7 +30,7 @@ class Payment extends Base
      * @see https://en.wikipedia.org/wiki/Payment_card_number Reference for existing prefixes
      * @see https://www.mastercard.us/en-us/issuers/get-support/2-series-bin-expansion.html MasterCard 2017 2-Series BIN Expansion
      */
-    protected static $cardParams = [
+    protected static array $cardParams = [
         'Visa' => [
             '4539###########',
             '4556###########',
@@ -76,7 +76,7 @@ class Payment extends Base
     /**
      * @var array list of IBAN formats, source: @link https://www.swift.com/standards/data-standards/iban
      */
-    protected static $ibanFormats = [
+    protected static array $ibanFormats = [
         'AD' => [
             [
                 'n',
@@ -920,7 +920,7 @@ class Payment extends Base
      *
      * @example 'MasterCard'
      */
-    public static function creditCardType()
+    public static function creditCardType(): string
     {
         return static::randomElement(static::$cardVendors);
     }
@@ -935,7 +935,7 @@ class Payment extends Base
      *
      * @example '4485480221084675'
      */
-    public static function creditCardNumber($type = null, $formatted = false, $separator = '-')
+    public static function creditCardNumber(?string $type = null, bool $formatted = false, string $separator = '-'): string
     {
         if (is_null($type)) {
             $type = static::creditCardType();
@@ -961,7 +961,7 @@ class Payment extends Base
      * @return \DateTime
      * @example 04/13
      */
-    public function creditCardExpirationDate($valid = true)
+    public function creditCardExpirationDate(bool $valid = true): \DateTime
     {
         if ($valid) {
             return $this->generator->dateTimeBetween('now', '36 months');
@@ -976,7 +976,7 @@ class Payment extends Base
      * @return string
      * @example '04/13'
      */
-    public function creditCardExpirationDateString($valid = true, $expirationDateFormat = null)
+    public function creditCardExpirationDateString(bool $valid = true, ?string $expirationDateFormat = null): string
     {
         return $this->creditCardExpirationDate($valid)->format(is_null($expirationDateFormat) ? static::$expirationDateFormat : $expirationDateFormat);
     }
@@ -985,7 +985,7 @@ class Payment extends Base
      * @param bool $valid True (by default) to get a valid expiration date, false to get a maybe valid date
      * @return array
      */
-    public function creditCardDetails($valid = true)
+    public function creditCardDetails(bool $valid = true): array
     {
         $type = static::creditCardType();
 
@@ -1006,7 +1006,7 @@ class Payment extends Base
      * @param int $length total length without country code and 2 check digits
      * @return string
      */
-    public static function iban($countryCode = null, $prefix = '', $length = null)
+    public static function iban(?string $countryCode = null, string $prefix = '', ?int $length = null): string
     {
         $countryCode = is_null($countryCode) ? self::randomKey(self::$ibanFormats) : strtoupper($countryCode);
 
@@ -1044,14 +1044,14 @@ class Payment extends Base
                 default:
                 case 'c':
                     $result .= mt_rand(0, 100) <= 50 ? static::randomDigit() : strtoupper(static::randomLetter());
-                    break;
+    break;
                 case 'a':
                     $result .= strtoupper(static::randomLetter());
-                    break;
+    break;
 
                 case 'n':
                     $result .= static::randomDigit();
-                    break;
+    break;
             }
         }
 
@@ -1067,7 +1067,7 @@ class Payment extends Base
      * @link    http://en.wikipedia.org/wiki/ISO_9362
      * @return  string Swift/Bic number
      */
-    public static function swiftBicNumber()
+    public static function swiftBicNumber(): string
     {
         return self::regexify('^([A-Z]){4}([A-Z]){2}([0-9A-Z]){2}([0-9A-Z]{3})?$');
     }

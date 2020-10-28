@@ -16,11 +16,8 @@ class Ean
      * Computes the checksum of an EAN number.
      *
      * @see https://en.wikipedia.org/wiki/International_Article_Number
-     *
-     * @param string $digits
-     * @return int
      */
-    public static function checksum($digits)
+    public static function checksum(string $digits): int
     {
         $length = strlen($digits);
 
@@ -42,9 +39,8 @@ class Ean
      * the checksum is correct.
      *
      * @param string $ean An EAN number
-     * @return bool
      */
-    public static function isValid($ean)
+    public static function isValid(string $ean): bool
     {
         if (!preg_match(self::PATTERN, $ean)) {
             return false;

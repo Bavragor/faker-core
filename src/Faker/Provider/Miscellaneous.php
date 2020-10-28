@@ -1199,11 +1199,9 @@ class Miscellaneous extends Base
      *
      * @param int $chanceOfGettingTrue Between 0 (always get false) and 100 (always get true)
      *
-     * @return bool
-     *
      * @example true
      */
-    public static function boolean($chanceOfGettingTrue = 50)
+    public static function boolean(int $chanceOfGettingTrue = 50): bool
     {
         return mt_rand(1, 100) <= $chanceOfGettingTrue;
     }

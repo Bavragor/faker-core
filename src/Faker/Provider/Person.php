@@ -43,10 +43,9 @@ class Person extends Base
 
     /**
      * @param string|null $gender 'male', 'female' or null for any
-     * @return string
      * @example 'John Doe'
      */
-    public function name($gender = null)
+    public function name(?string $gender = null): string
     {
         if ($gender === static::GENDER_MALE) {
             $format = static::randomElement(static::$maleNameFormats);
@@ -61,10 +60,9 @@ class Person extends Base
 
     /**
      * @param string|null $gender 'male', 'female' or null for any
-     * @return string
      * @example 'John'
      */
-    public function firstName($gender = null)
+    public function firstName(?string $gender = null): string
     {
         if ($gender === static::GENDER_MALE) {
             return static::firstNameMale();
@@ -87,9 +85,8 @@ class Person extends Base
 
     /**
      * @example 'Doe'
-     * @return string
      */
-    public function lastName()
+    public function lastName(): string
     {
         return static::randomElement(static::$lastName);
     }
@@ -97,9 +94,8 @@ class Person extends Base
     /**
      * @example 'Mrs.'
      * @param string|null $gender 'male', 'female' or null for any
-     * @return string
      */
-    public function title($gender = null)
+    public function title(?string $gender = null): string
     {
         if ($gender === static::GENDER_MALE) {
             return static::titleMale();

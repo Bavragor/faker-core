@@ -7,10 +7,9 @@ class Iban
     /**
      * Generates IBAN Checksum
      *
-     * @param string $iban
      * @return string Checksum (numeric string)
      */
-    public static function checksum($iban)
+    public static function checksum(string $iban): string
     {
         // Move first four digits to end and set checksum to '00'
         $checkString = substr($iban, 4) . substr($iban, 0, 2) . '00';
@@ -24,23 +23,15 @@ class Iban
         return str_pad((string) $checksum, 2, '0', STR_PAD_LEFT);
     }
 
-    /**
-     * @param string $match
-     *
-     * @return int
-     */
-    private static function alphaToNumberCallback($match)
+    private static function alphaToNumberCallback(array $match): int
     {
         return self::alphaToNumber($match[0]);
     }
 
     /**
      * Converts letter to number
-     *
-     * @param string $char
-     * @return int
      */
-    public static function alphaToNumber($char)
+    public static function alphaToNumber(string $char): int
     {
         return ord($char) - 55;
     }
@@ -49,9 +40,8 @@ class Iban
      * Calculates mod97 on a numeric string
      *
      * @param string $number Numeric string
-     * @return int
      */
-    public static function mod97($number)
+    public static function mod97(string $number): int
     {
         $checksum = (int) $number[0];
         for ($i = 1, $size = strlen($number); $i < $size; $i++) {
@@ -62,11 +52,8 @@ class Iban
 
     /**
      * Checks whether an IBAN has a valid checksum
-     *
-     * @param string $iban
-     * @return bool
      */
-    public static function isValid($iban)
+    public static function isValid(string $iban): bool
     {
         return self::checksum($iban) === substr($iban, 2, 2);
     }

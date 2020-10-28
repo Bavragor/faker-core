@@ -17,12 +17,8 @@ class Barcode extends Base
 
     /**
      * Utility function for computing EAN checksums
-     *
-     * @param string $input
-     *
-     * @return int
      */
-    protected static function eanChecksum($input)
+    protected static function eanChecksum(string $input): int
     {
         $sequence = (strlen($input) + 1) === 8 ? [
             3,
@@ -48,7 +44,7 @@ class Barcode extends Base
      *
      * @return int Check digit
      */
-    protected static function isbnChecksum($input)
+    protected static function isbnChecksum(string $input): int
     {
         // We're calculating check digit for ISBN-10
         // so, the length of the input should be 9
@@ -61,7 +57,7 @@ class Barcode extends Base
         $digits = str_split((string) $input);
         array_walk(
             $digits,
-            function (&$digit, $position) {
+            function (&$digit, $position): void {
                 $digit = (10 - $position) * $digit;
             }
         );
@@ -74,10 +70,9 @@ class Barcode extends Base
     /**
      * Get a random EAN13 barcode.
      *
-     * @return string
      * @example '4006381333931'
      */
-    public function ean13()
+    public function ean13(): string
     {
         return $this->ean(13);
     }
@@ -85,10 +80,9 @@ class Barcode extends Base
     /**
      * Get a random EAN8 barcode.
      *
-     * @return string
      * @example '73513537'
      */
-    public function ean8()
+    public function ean8(): string
     {
         return $this->ean(8);
     }
@@ -98,10 +92,9 @@ class Barcode extends Base
      *
      * @link http://en.wikipedia.org/wiki/International_Standard_Book_Number
      *
-     * @return string
      * @example '4881416324'
      */
-    public function isbn10()
+    public function isbn10(): string
     {
         $code = static::numerify(str_repeat('#', 9));
 
@@ -113,10 +106,9 @@ class Barcode extends Base
      *
      * @link http://en.wikipedia.org/wiki/International_Standard_Book_Number
      *
-     * @return string
      * @example '9790404436093'
      */
-    public function isbn13()
+    public function isbn13(): string
     {
         $code = '97' . static::numberBetween(8, 9) . static::numerify(str_repeat('#', 9));
 

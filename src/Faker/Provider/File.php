@@ -10,7 +10,7 @@ class File extends Base
      * @var array Map of MIME types => file extension(s)
      * @link http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
      */
-    protected static $mimeTypes = [
+    protected static array $mimeTypes = [
         'application/atom+xml'                                                      => 'atom',
         'application/ecmascript'                                                    => 'ecma',
         'application/emma+xml'                                                      => 'emma',
@@ -791,10 +791,9 @@ class File extends Base
     /**
      * Get a random MIME type
      *
-     * @return string
      * @example 'video/avi'
      */
-    public static function mimeType()
+    public static function mimeType(): string
     {
         return static::randomElement(array_keys(static::$mimeTypes));
     }
@@ -803,9 +802,8 @@ class File extends Base
      * Get a random file extension (without a dot)
      *
      * @example avi
-     * @return string
      */
-    public static function fileExtension()
+    public static function fileExtension(): string
     {
         $random_extension = static::randomElement(array_values(static::$mimeTypes));
 
@@ -816,11 +814,9 @@ class File extends Base
      * Copy a random file from the source directory to the target directory and returns the filename/fullpath
      *
      * @param  string  $sourceDirectory The directory to look for random file taking
-     * @param  string  $targetDirectory
      * @param bool $fullPath Whether to have the full path or just the filename
-     * @return string
      */
-    public static function file($sourceDirectory = '/tmp', $targetDirectory = '/tmp', $fullPath = true)
+    public static function file(string $sourceDirectory = '/tmp', string $targetDirectory = '/tmp', bool $fullPath = true): string
     {
         if (!is_dir($sourceDirectory)) {
             throw new \InvalidArgumentException(sprintf('Source directory %s does not exist or is not a directory.', $sourceDirectory));

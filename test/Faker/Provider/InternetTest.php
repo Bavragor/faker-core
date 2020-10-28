@@ -11,10 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 final class InternetTest extends TestCase
 {
-    /**
-     * @var Generator
-     */
-    private $faker;
+    private Generator $faker;
 
     protected function setUp(): void
     {
@@ -28,6 +25,7 @@ final class InternetTest extends TestCase
 
     public function localeDataProvider()
     {
+        $locales = [];
         $providerPath = realpath(__DIR__ . '/../../../src/Faker/Provider');
         $localePaths = array_filter(glob($providerPath . '/*', GLOB_ONLYDIR));
         foreach ($localePaths as $path) {
@@ -43,7 +41,7 @@ final class InternetTest extends TestCase
      *
      * @dataProvider localeDataProvider
      */
-    public function testEmailIsValid($locale)
+    public function testEmailIsValid($locale): void
     {
         if ($locale !== 'en_US' && !class_exists('Transliterator')) {
             $this->markTestSkipped('Transliterator class not available (intl extension)');
@@ -58,7 +56,7 @@ final class InternetTest extends TestCase
     /**
      * @dataProvider localeDataProvider
      */
-    public function testUsernameIsValid($locale)
+    public function testUsernameIsValid($locale): void
     {
         if ($locale !== 'en_US' && !class_exists('Transliterator')) {
             $this->markTestSkipped('Transliterator class not available (intl extension)');
@@ -73,7 +71,7 @@ final class InternetTest extends TestCase
     /**
      * @dataProvider localeDataProvider
      */
-    public function testDomainnameIsValid($locale)
+    public function testDomainnameIsValid($locale): void
     {
         if ($locale !== 'en_US' && !class_exists('Transliterator')) {
             $this->markTestSkipped('Transliterator class not available (intl extension)');
@@ -88,7 +86,7 @@ final class InternetTest extends TestCase
     /**
      * @dataProvider localeDataProvider
      */
-    public function testDomainwordIsValid($locale)
+    public function testDomainwordIsValid($locale): void
     {
         if ($locale !== 'en_US' && !class_exists('Transliterator')) {
             $this->markTestSkipped('Transliterator class not available (intl extension)');
@@ -100,7 +98,7 @@ final class InternetTest extends TestCase
         $this->assertMatchesRegularExpression($pattern, $domainWord);
     }
 
-    public function loadLocalProviders($locale)
+    public function loadLocalProviders($locale): void
     {
         $providerPath = realpath(__DIR__ . '/../../../src/Faker/Provider');
         if (file_exists($providerPath.'/'.$locale.'/Internet.php')) {
@@ -117,50 +115,50 @@ final class InternetTest extends TestCase
         }
     }
 
-    public function testPasswordIsValid()
+    public function testPasswordIsValid(): void
     {
         $this->assertMatchesRegularExpression('/^.{6}$/', $this->faker->password(6, 6));
     }
 
-    public function testSlugIsValid()
+    public function testSlugIsValid(): void
     {
         $pattern = '/^[a-z0-9-]+$/';
         $slug = $this->faker->slug();
         $this->assertSame(preg_match($pattern, $slug), 1);
     }
 
-    public function testUrlIsValid()
+    public function testUrlIsValid(): void
     {
         $url = $this->faker->url();
         $this->assertNotFalse(filter_var($url, FILTER_VALIDATE_URL));
     }
 
-    public function testLocalIpv4()
+    public function testLocalIpv4(): void
     {
         $this->assertNotFalse(filter_var(Internet::localIpv4(), FILTER_VALIDATE_IP, FILTER_FLAG_IPV4));
     }
 
-    public function testIpv4()
+    public function testIpv4(): void
     {
         $this->assertNotFalse(filter_var($this->faker->ipv4(), FILTER_VALIDATE_IP, FILTER_FLAG_IPV4));
     }
 
-    public function testIpv4NotLocalNetwork()
+    public function testIpv4NotLocalNetwork(): void
     {
         $this->assertDoesNotMatchRegularExpression('/\A0\./', $this->faker->ipv4());
     }
 
-    public function testIpv4NotBroadcast()
+    public function testIpv4NotBroadcast(): void
     {
         $this->assertNotEquals('255.255.255.255', $this->faker->ipv4());
     }
 
-    public function testIpv6()
+    public function testIpv6(): void
     {
         $this->assertNotFalse(filter_var($this->faker->ipv6(), FILTER_VALIDATE_IP, FILTER_FLAG_IPV6));
     }
 
-    public function testMacAddress()
+    public function testMacAddress(): void
     {
         $this->assertMatchesRegularExpression('/^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$/i', Internet::macAddress());
     }

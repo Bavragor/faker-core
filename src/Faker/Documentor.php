@@ -7,7 +7,6 @@ class Documentor
     protected Generator $generator;
 
     /**
-     * @param Generator $generator
      */
     public function __construct(Generator $generator)
     {

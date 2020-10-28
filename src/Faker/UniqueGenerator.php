@@ -23,7 +23,6 @@ class UniqueGenerator
     /**
      * Catch and proxy all generator calls but return only unique values
      *
-     * @param string $attribute
      * @return mixed
      */
     public function __get(string $attribute)

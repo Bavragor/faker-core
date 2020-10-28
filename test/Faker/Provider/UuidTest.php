@@ -8,13 +8,13 @@ use PHPUnit\Framework\TestCase;
 
 final class UuidTest extends TestCase
 {
-    public function testUuidReturnsUuid()
+    public function testUuidReturnsUuid(): void
     {
         $uuid = BaseProvider::uuid();
         $this->assertTrue($this->isUuid($uuid));
     }
 
-    public function testUuidExpectedSeed()
+    public function testUuidExpectedSeed(): void
     {
         if (pack('L', 0x6162797A) === pack('N', 0x6162797A)) {
             $this->markTestSkipped('Big Endian');

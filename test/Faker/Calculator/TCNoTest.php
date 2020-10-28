@@ -38,7 +38,7 @@ final class TCNoTest extends TestCase
      * @param $tcNo
      * @param $checksum
      */
-    public function testChecksum($tcNo, $checksum)
+    public function testChecksum($tcNo, $checksum): void
     {
         $this->assertEquals($checksum, TCNo::checksum($tcNo), $tcNo);
     }
@@ -83,7 +83,7 @@ final class TCNoTest extends TestCase
      * @param $tcNo
      * @param $isValid
      */
-    public function testIsValid($tcNo, $isValid)
+    public function testIsValid($tcNo, $isValid): void
     {
         $this->assertEquals($isValid, TCNo::isValid($tcNo), $tcNo);
     }

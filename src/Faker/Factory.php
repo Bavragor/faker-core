@@ -29,11 +29,8 @@ class Factory
 
     /**
      * Create a new generator
-     *
-     * @param string $locale
-     * @return Generator
      */
-    public static function create($locale = self::DEFAULT_LOCALE)
+    public static function create(string $locale = self::DEFAULT_LOCALE): Generator
     {
         $generator = new Generator();
 

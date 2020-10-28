@@ -284,7 +284,7 @@ final class IbanTest extends TestCase
     /**
      * @dataProvider checksumProvider
      */
-    public function testChecksum($iban, $checksum)
+    public function testChecksum($iban, $checksum): void
     {
         $this->assertEquals($checksum, Iban::checksum($iban), $iban);
     }
@@ -836,7 +836,7 @@ final class IbanTest extends TestCase
     /**
      * @dataProvider validatorProvider
      */
-    public function testIsValid($iban, $isValid)
+    public function testIsValid($iban, $isValid): void
     {
         $this->assertEquals($isValid, Iban::isValid($iban), $iban);
     }
@@ -954,7 +954,7 @@ final class IbanTest extends TestCase
     /**
      * @dataProvider alphaToNumberProvider
      */
-    public function testAlphaToNumber($letter, $number)
+    public function testAlphaToNumber($letter, $number): void
     {
         $this->assertEquals($number, Iban::alphaToNumber($letter), $letter);
     }
@@ -995,7 +995,7 @@ final class IbanTest extends TestCase
     /**
      * @dataProvider mod97Provider
      */
-    public function testMod97($number, $result)
+    public function testMod97($number, $result): void
     {
         $this->assertEquals($result, Iban::mod97($number), $number);
     }

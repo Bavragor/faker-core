@@ -149,8 +149,7 @@
     <!-- SlevomatCodingStandard.ControlStructures.UselessIfConditionWithReturn -->
     <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes" />
 
-    <!--rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint">
-        <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.UselessAnnotation" />
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint">
         <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification" />
         <properties>
             <property name="enableObjectTypeHint" value="true" />
@@ -158,7 +157,6 @@
     </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
-        <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.UselessAnnotation" />
         <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification" />
         <properties>
             <property name="enableNativeTypeHint" value="true" />
@@ -166,12 +164,11 @@
     </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint">
-        <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.UselessAnnotation" />
         <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification" />
         <properties>
             <property name="enableObjectTypeHint" value="true" />
         </properties>
-    </rule-->
+    </rule>
 
     <file>src/</file>
     <file>test/</file>

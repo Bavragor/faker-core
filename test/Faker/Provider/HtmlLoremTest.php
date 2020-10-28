@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 final class HtmlLoremTest extends TestCase
 {
-    public function testProvider()
+    public function testProvider(): void
     {
         $faker = new Generator();
         $faker->addProvider(new HtmlLorem($faker));
@@ -17,7 +17,7 @@ final class HtmlLoremTest extends TestCase
         $this->assertStringEndsWith("</html>\n", $node);
     }
 
-    public function testRandomHtmlReturnsValidHTMLString()
+    public function testRandomHtmlReturnsValidHTMLString(): void
     {
         $faker = new Generator();
         $faker->addProvider(new HtmlLorem($faker));

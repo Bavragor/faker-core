@@ -243,9 +243,8 @@ class Color extends Base
 
     /**
      * @example '340,50,20'
-     * @return string
      */
-    public static function hslColor()
+    public static function hslColor(): string
     {
         return sprintf(
             '%s,%s,%s',
@@ -259,7 +258,7 @@ class Color extends Base
      * @example array(340, 50, 20)
      * @return array
      */
-    public static function hslColorAsArray()
+    public static function hslColorAsArray(): array
     {
         return [
             static::numberBetween(0, 360),

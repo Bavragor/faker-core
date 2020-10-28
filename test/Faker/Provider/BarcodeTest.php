@@ -18,7 +18,7 @@ final class BarcodeTest extends TestCase
         $this->faker = $faker;
     }
 
-    public function testEan8()
+    public function testEan8(): void
     {
         $code = $this->faker->ean8();
         $this->assertMatchesRegularExpression('/^\d{8}$/i', $code);
@@ -27,7 +27,7 @@ final class BarcodeTest extends TestCase
         $this->assertEquals(TestableBarcode::eanChecksum($codeWithoutChecksum), $checksum);
     }
 
-    public function testEan13()
+    public function testEan13(): void
     {
         $code = $this->faker->ean13();
         $this->assertMatchesRegularExpression('/^\d{13}$/i', $code);
@@ -39,7 +39,7 @@ final class BarcodeTest extends TestCase
 
 final class TestableBarcode extends Barcode
 {
-    public static function eanChecksum($input)
+    public static function eanChecksum($input): int
     {
         return parent::eanChecksum($input);
     }

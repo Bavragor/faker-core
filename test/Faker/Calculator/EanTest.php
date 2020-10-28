@@ -50,7 +50,7 @@ final class EanTest extends TestCase
     /**
      * @dataProvider Ean8checksumProvider
      */
-    public function testChecksumEan8($partial, $checksum)
+    public function testChecksumEan8($partial, $checksum): void
     {
         $this->assertEquals($checksum, Ean::checksum($partial));
     }
@@ -58,7 +58,7 @@ final class EanTest extends TestCase
     /**
      * @dataProvider ean8ValidationProvider
      */
-    public function testEan8Validation($ean8, $valid)
+    public function testEan8Validation($ean8, $valid): void
     {
         $this->assertTrue(Ean::isValid($ean8) === $valid);
     }
@@ -114,7 +114,7 @@ final class EanTest extends TestCase
     /**
      * @dataProvider Ean13checksumProvider
      */
-    public function testChecksumEan13($partial, $checksum)
+    public function testChecksumEan13($partial, $checksum): void
     {
         $this->assertEquals($checksum, Ean::checksum($partial));
     }
@@ -122,7 +122,7 @@ final class EanTest extends TestCase
     /**
      * @dataProvider ean13ValidationProvider
      */
-    public function testEan13Validation($ean13, $valid)
+    public function testEan13Validation($ean13, $valid): void
     {
         $this->assertTrue(Ean::isValid($ean13) === $valid);
     }

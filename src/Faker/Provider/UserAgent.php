@@ -55,20 +55,16 @@ class UserAgent extends Base
 
     /**
      * Generate mac processor
-     *
-     * @return string
      */
-    public static function macProcessor()
+    public static function macProcessor(): string
     {
         return static::randomElement(static::$macProcessor);
     }
 
     /**
      * Generate linux processor
-     *
-     * @return string
      */
-    public static function linuxProcessor()
+    public static function linuxProcessor(): string
     {
         return static::randomElement(static::$linuxProcessor);
     }

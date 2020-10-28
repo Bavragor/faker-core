@@ -31,9 +31,8 @@ final class ProviderOverrideTest extends TestCase
 
     /**
      * @dataProvider localeDataProvider
-     * @param string $locale
      */
-    public function testAddress($locale = null)
+    public function testAddress(?string $locale = null): void
     {
         $faker = Faker\Factory::create($locale);
 
@@ -45,9 +44,8 @@ final class ProviderOverrideTest extends TestCase
 
     /**
      * @dataProvider localeDataProvider
-     * @param string $locale
      */
-    public function testCompany($locale = null)
+    public function testCompany(?string $locale = null): void
     {
         $faker = Faker\Factory::create($locale);
 
@@ -56,9 +54,8 @@ final class ProviderOverrideTest extends TestCase
 
     /**
      * @dataProvider localeDataProvider
-     * @param string $locale
      */
-    public function testDateTime($locale = null)
+    public function testDateTime(?string $locale = null): void
     {
         $faker = Faker\Factory::create($locale);
 
@@ -68,9 +65,8 @@ final class ProviderOverrideTest extends TestCase
 
     /**
      * @dataProvider localeDataProvider
-     * @param string $locale
      */
-    public function testInternet($locale = null)
+    public function testInternet(?string $locale = null): void
     {
         if ($locale && $locale !== 'en_US' && !class_exists('Transliterator')) {
             $this->markTestSkipped('Transliterator class not available (intl extension)');
@@ -88,9 +84,8 @@ final class ProviderOverrideTest extends TestCase
 
     /**
      * @dataProvider localeDataProvider
-     * @param string $locale
      */
-    public function testPerson($locale = null)
+    public function testPerson(?string $locale = null): void
     {
         $faker = Faker\Factory::create($locale);
 
@@ -102,9 +97,8 @@ final class ProviderOverrideTest extends TestCase
 
     /**
      * @dataProvider localeDataProvider
-     * @param string $locale
      */
-    public function testPhoneNumber($locale = null)
+    public function testPhoneNumber(?string $locale = null): void
     {
         $faker = Faker\Factory::create($locale);
 
@@ -113,9 +107,8 @@ final class ProviderOverrideTest extends TestCase
 
     /**
      * @dataProvider localeDataProvider
-     * @param string $locale
      */
-    public function testUserAgent($locale = null)
+    public function testUserAgent(?string $locale = null): void
     {
         $faker = Faker\Factory::create($locale);
 
@@ -126,9 +119,8 @@ final class ProviderOverrideTest extends TestCase
      * @dataProvider localeDataProvider
      *
      * @param null   $locale
-     * @param string $locale
      */
-    public function testUuid($locale = null)
+    public function testUuid(?string $locale = null): void
     {
         $faker = Faker\Factory::create($locale);
 
@@ -138,7 +130,7 @@ final class ProviderOverrideTest extends TestCase
     /**
      * @return array
      */
-    public function localeDataProvider()
+    public function localeDataProvider(): array
     {
         $locales = $this->getAllLocales();
         $data = [];
@@ -155,7 +147,7 @@ final class ProviderOverrideTest extends TestCase
      *
      * @return array
      */
-    private function getAllLocales()
+    private function getAllLocales(): array
     {
         static $locales = [];
 

@@ -9,15 +9,12 @@ use PHPUnit\Framework\TestCase;
 
 final class TextTest extends TestCase
 {
-    /**
-     * @var Generator
-     */
-    private $generator;
+    private Generator $generator;
 
     /**
      * @before
      */
-    public function buildGenerator()
+    public function buildGenerator(): void
     {
         $generator = new Generator();
         $generator->addProvider(new Text($generator));
@@ -37,12 +34,12 @@ final class TextTest extends TestCase
      *           [200]
      *           [500]
      */
-    public function testTextMaxLength($length)
+    public function testTextMaxLength($length): void
     {
         $this->assertLessThan($length, $this->generator->realText($length));
     }
 
-    public function testTextMaxIndex()
+    public function testTextMaxIndex(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -51,7 +48,7 @@ final class TextTest extends TestCase
         $this->fail('The index should be less than or equal to 5.');
     }
 
-    public function testTextMinIndex()
+    public function testTextMinIndex(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -60,7 +57,7 @@ final class TextTest extends TestCase
         $this->fail('The index should be greater than or equal to 1.');
     }
 
-    public function testTextMinLength()
+    public function testTextMinLength(): void
     {
         $this->expectException(InvalidArgumentException::class);
 

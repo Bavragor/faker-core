@@ -8,27 +8,27 @@ use PHPUnit\Framework\TestCase;
 
 final class ImageTest extends TestCase
 {
-    public function testImageUrlUses640x680AsTheDefaultSize()
+    public function testImageUrlUses640x680AsTheDefaultSize(): void
     {
         $this->assertMatchesRegularExpression('#^https://lorempixel.com/640/480/#', Image::imageUrl());
     }
 
-    public function testImageUrlAcceptsCustomWidthAndHeight()
+    public function testImageUrlAcceptsCustomWidthAndHeight(): void
     {
         $this->assertMatchesRegularExpression('#^https://lorempixel.com/800/400/#', Image::imageUrl(800, 400));
     }
 
-    public function testImageUrlAcceptsCustomCategory()
+    public function testImageUrlAcceptsCustomCategory(): void
     {
         $this->assertMatchesRegularExpression('#^https://lorempixel.com/800/400/nature/#', Image::imageUrl(800, 400, 'nature'));
     }
 
-    public function testImageUrlAcceptsCustomText()
+    public function testImageUrlAcceptsCustomText(): void
     {
         $this->assertMatchesRegularExpression('#^https://lorempixel.com/800/400/nature/Faker#', Image::imageUrl(800, 400, 'nature', false, 'Faker'));
     }
 
-    public function testImageUrlReturnsLinkToRegularImageWhenGrayIsFalse()
+    public function testImageUrlReturnsLinkToRegularImageWhenGrayIsFalse(): void
     {
         $imageUrl = Image::imageUrl(
             800,
@@ -42,7 +42,7 @@ final class ImageTest extends TestCase
         $this->assertSame('https://lorempixel.com/800/400/nature/Faker/', $imageUrl);
     }
 
-    public function testImageUrlReturnsLinkToRegularImageWhenGrayIsTrue()
+    public function testImageUrlReturnsLinkToRegularImageWhenGrayIsTrue(): void
     {
         $imageUrl = Image::imageUrl(
             800,
@@ -56,7 +56,7 @@ final class ImageTest extends TestCase
         $this->assertSame('https://lorempixel.com/gray/800/400/nature/Faker/', $imageUrl);
     }
 
-    public function testImageUrlAddsARandomGetParameterByDefault()
+    public function testImageUrlAddsARandomGetParameterByDefault(): void
     {
         $url = Image::imageUrl(800, 400);
         $splitUrl = preg_split('/\?/', $url);
@@ -65,14 +65,14 @@ final class ImageTest extends TestCase
         $this->assertMatchesRegularExpression('#\d{5}#', $splitUrl[1]);
     }
 
-    public function testUrlWithDimensionsAndBadCategory()
+    public function testUrlWithDimensionsAndBadCategory(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
         Image::imageUrl(800, 400, 'bullhonky');
     }
 
-    public function testDownloadWithDefaults()
+    public function testDownloadWithDefaults(): void
     {
         $this->markTestSkipped('Skipped due to unstable service prior 1.9.0 release');
 
