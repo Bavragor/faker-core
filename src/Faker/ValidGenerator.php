@@ -8,16 +8,11 @@ namespace Faker;
  */
 class ValidGenerator
 {
-    protected $generator;
+    protected Generator $generator;
     protected $validator;
-    protected $maxRetries;
+    protected int $maxRetries;
 
-    /**
-     * @param Generator $generator
-     * @param callable|null $validator
-     * @param integer $maxRetries
-     */
-    public function __construct(Generator $generator, $validator = null, $maxRetries = 10000)
+    public function __construct(Generator $generator, ?callable $validator = null, int $maxRetries = 10000)
     {
         if (is_null($validator)) {
             $validator = function () {
@@ -26,6 +21,7 @@ class ValidGenerator
         } elseif (!is_callable($validator)) {
             throw new \InvalidArgumentException('valid() only accepts callables as first argument');
         }
+
         $this->generator = $generator;
         $this->validator = $validator;
         $this->maxRetries = $maxRetries;
@@ -33,13 +29,12 @@ class ValidGenerator
 
     /**
      * Catch and proxy all generator calls but return only valid values
-     * @param string $attribute
      *
      * @return mixed
      */
-    public function __get($attribute)
+    public function __get(string $attribute)
     {
-        return $this->__call($attribute, array());
+        return $this->__call($attribute, []);
     }
 
     /**
@@ -49,12 +44,15 @@ class ValidGenerator
      *
      * @return mixed
      */
-    public function __call($name, $arguments)
+    public function __call(string $name, array $arguments)
     {
         $i = 0;
+
         do {
             $res = call_user_func_array(array($this->generator, $name), $arguments);
+
             $i++;
+
             if ($i > $this->maxRetries) {
                 throw new \OverflowException(sprintf('Maximum retries of %d reached without finding a valid value', $this->maxRetries));
             }

@@ -2,6 +2,8 @@
 
 namespace Faker;
 
+use Faker\Provider\Base;
+
 /**
  * @property string $name
  * @method string name(string $gender = null)
@@ -199,20 +201,20 @@ namespace Faker;
  */
 class Generator
 {
-    protected $providers = array();
-    protected $formatters = array();
+    protected array $providers = [];
+    protected array $formatters = [];
 
-    public function addProvider($provider)
+    public function addProvider(Base $provider): void
     {
         array_unshift($this->providers, $provider);
     }
 
-    public function getProviders()
+    public function getProviders(): array
     {
         return $this->providers;
     }
 
-    public function seed($seed = null)
+    public function seed(int $seed = null): void
     {
         if ($seed === null) {
             mt_srand();
@@ -225,43 +227,37 @@ class Generator
         }
     }
 
-    public function format($formatter, $arguments = array())
+    public function format(string $formatter, array $arguments = [])
     {
         return call_user_func_array($this->getFormatter($formatter), $arguments);
     }
 
-    /**
-     * @param string $formatter
-     *
-     * @return Callable
-     */
-    public function getFormatter($formatter)
+    public function getFormatter(string $formatter): callable
     {
         if (isset($this->formatters[$formatter])) {
             return $this->formatters[$formatter];
         }
+
         foreach ($this->providers as $provider) {
             if (method_exists($provider, $formatter)) {
-                $this->formatters[$formatter] = array($provider, $formatter);
+                $this->formatters[$formatter] = [$provider, $formatter];
 
                 return $this->formatters[$formatter];
             }
         }
+
         throw new \InvalidArgumentException(sprintf('Unknown formatter "%s"', $formatter));
     }
 
     /**
      * Replaces tokens ('{{ tokenName }}') with the result from the token method call
-     *
-     * @param  string $string String that needs to bet parsed
-     * @return string
      */
-    public function parse($string)
+    public function parse(string $string): string
     {
-        return preg_replace_callback('/\{\{\s?(\w+)\s?\}\}/u', array($this, 'callFormatWithMatches'), $string);
+        return (string) preg_replace_callback('/\{\{\s?(\w+)\s?\}\}/u', array($this, 'callFormatWithMatches'), $string);
     }
 
-    protected function callFormatWithMatches($matches)
+    protected function callFormatWithMatches(array $matches)
     {
         return $this->format($matches[1]);
     }

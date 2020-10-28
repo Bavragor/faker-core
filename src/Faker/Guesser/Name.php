@@ -2,39 +2,35 @@
 
 namespace Faker\Guesser;
 
-use \Faker\Provider\Base;
+use Faker\Generator;
+use Faker\Provider\Base;
 
 class Name
 {
-    protected $generator;
+    protected Generator $generator;
 
-    /**
-     * @param \Faker\Generator $generator
-     */
-    public function __construct(\Faker\Generator $generator)
+    public function __construct(Generator $generator)
     {
         $this->generator = $generator;
     }
 
-    /**
-     * @param string $name
-     * @param int|null $size Length of field, if known
-     * @return callable
-     */
-    public function guessFormat($name, $size = null)
+    public function guessFormat(string $name, ?int $fieldSize = null): ?callable
     {
         $name = Base::toLower($name);
         $generator = $this->generator;
+
         if (preg_match('/^is[_A-Z]/', $name)) {
             return function () use ($generator) {
                 return $generator->boolean;
             };
         }
+
         if (preg_match('/(_a|A)t$/', $name)) {
             return function () use ($generator) {
                 return $generator->dateTime;
             };
         }
+
         switch (str_replace('_', '', $name)) {
             case 'firstname':
                 return function () use ($generator) {
@@ -94,7 +90,7 @@ class Name
                     return $generator->state;
                 };
             case 'country':
-                switch ($size) {
+                switch ($fieldSize) {
                     case 2:
                         return function () use ($generator) {
                             return $generator->countryCode;
@@ -135,7 +131,7 @@ class Name
                     return $generator->company;
                 };
             case 'title':
-                if ($size !== null && $size <= 10) {
+                if ($fieldSize !== null && $fieldSize <= 10) {
                     return function () use ($generator) {
                         return $generator->title;
                     };
@@ -152,5 +148,7 @@ class Name
                     return $generator->text;
                 };
         }
+
+        return null;
     }
 }

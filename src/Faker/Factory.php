@@ -4,9 +4,9 @@ namespace Faker;
 
 class Factory
 {
-    const DEFAULT_LOCALE = 'en_US';
+    public const DEFAULT_LOCALE = 'en_US';
 
-    protected static $defaultProviders = array('Address', 'Barcode', 'Biased', 'Color', 'Company', 'DateTime', 'File', 'HtmlLorem', 'Image', 'Internet', 'Lorem', 'Miscellaneous', 'Payment', 'Person', 'PhoneNumber', 'Text', 'UserAgent', 'Uuid');
+    protected static array $defaultProviders = ['Address', 'Barcode', 'Biased', 'Color', 'Company', 'DateTime', 'File', 'HtmlLorem', 'Image', 'Internet', 'Lorem', 'Miscellaneous', 'Payment', 'Person', 'PhoneNumber', 'Text', 'UserAgent', 'Uuid'];
 
     /**
      * Create a new generator
@@ -17,45 +17,47 @@ class Factory
     public static function create($locale = self::DEFAULT_LOCALE)
     {
         $generator = new Generator();
+
         foreach (static::$defaultProviders as $provider) {
             $providerClassName = self::getProviderClassname($provider, $locale);
+
             $generator->addProvider(new $providerClassName($generator));
         }
 
         return $generator;
     }
 
-    /**
-     * @param string $provider
-     * @param string $locale
-     * @return string
-     */
-    protected static function getProviderClassname($provider, $locale = '')
+    protected static function getProviderClassname(string $provider, string $locale = ''): string
     {
-        if ($providerClass = self::findProviderClassname($provider, $locale)) {
+        $providerClass = self::findProviderClassname($provider, $locale);
+
+        if ($providerClass !== null) {
             return $providerClass;
         }
-        // fallback to default locale
-        if ($providerClass = self::findProviderClassname($provider, static::DEFAULT_LOCALE)) {
+
+        $providerClass = self::findProviderClassname($provider, static::DEFAULT_LOCALE);
+
+        if ($providerClass !== null) {
             return $providerClass;
         }
-        // fallback to no locale
-        if ($providerClass = self::findProviderClassname($provider)) {
+
+        $providerClass = self::findProviderClassname($provider);
+
+        if ($providerClass !== null) {
             return $providerClass;
         }
+
         throw new \InvalidArgumentException(sprintf('Unable to find provider "%s" with locale "%s"', $provider, $locale));
     }
 
-    /**
-     * @param string $provider
-     * @param string $locale
-     * @return string
-     */
-    protected static function findProviderClassname($provider, $locale = '')
+    protected static function findProviderClassname(string $provider, string $locale = ''): ?string
     {
         $providerClass = 'Faker\\' . ($locale ? sprintf('Provider\%s\%s', $locale, $provider) : sprintf('Provider\%s', $provider));
+
         if (class_exists($providerClass, true)) {
             return $providerClass;
         }
+
+        return null;
     }
 }
