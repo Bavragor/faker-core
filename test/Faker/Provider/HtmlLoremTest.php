@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker\Test\Provider;
 
@@ -8,13 +8,12 @@ use PHPUnit\Framework\TestCase;
 
 final class HtmlLoremTest extends TestCase
 {
-
     public function testProvider()
     {
         $faker = new Generator();
         $faker->addProvider(new HtmlLorem($faker));
         $node = $faker->randomHtml(6, 10);
-        $this->assertStringStartsWith("<html>", $node);
+        $this->assertStringStartsWith('<html>', $node);
         $this->assertStringEndsWith("</html>\n", $node);
     }
 
@@ -27,5 +26,4 @@ final class HtmlLoremTest extends TestCase
         $error = $dom->loadHTML($node);
         $this->assertTrue($error);
     }
-
 }

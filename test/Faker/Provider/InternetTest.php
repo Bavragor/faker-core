@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker\Test\Provider;
 
@@ -32,7 +32,7 @@ final class InternetTest extends TestCase
         $localePaths = array_filter(glob($providerPath . '/*', GLOB_ONLYDIR));
         foreach ($localePaths as $path) {
             $parts = explode('/', $path);
-            $locales[] = array($parts[count($parts) - 1]);
+            $locales[] = [$parts[count($parts) - 1]];
         }
 
         return $locales;

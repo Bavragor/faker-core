@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker\Test\Provider;
 
@@ -191,25 +191,37 @@ final class DateTimeTest extends TestCase
         $date = DateTimeProvider::dateTimeBetween($start, $end);
         $this->assertInstanceOf('\DateTime', $date);
         $this->assertGreaterThanOrEqual(new \DateTime($start), $date);
-        $this->assertLessThanOrEqual(new \DateTime($end), $date);
+        $this->assertLessThanOrEqual(new \DateTime($end ?: 'now'), $date);
         $this->assertEquals(new \DateTimeZone($this->defaultTz), $date->getTimezone());
     }
 
     public function providerDateTimeBetween()
     {
-        return array(
-            array('-1 year', false),
-            array('-1 year', null),
-            array('-1 day', '-1 hour'),
-            array('-1 day', 'now'),
-        );
+        return [
+            [
+                '-1 year',
+                false,
+            ],
+            [
+                '-1 year',
+                null,
+            ],
+            [
+                '-1 day',
+                '-1 hour',
+            ],
+            [
+                '-1 day',
+                'now',
+            ],
+        ];
     }
 
     /**
      *
      * @dataProvider providerDateTimeInInterval
      */
-    public function testDateTimeInInterval($start, $interval = "+5 days", $isInFuture)
+    public function testDateTimeInInterval($start, $interval = '+5 days', $isInFuture)
     {
         $date = DateTimeProvider::dateTimeInInterval($start, $interval);
         $this->assertInstanceOf('\DateTime', $date);
@@ -227,11 +239,23 @@ final class DateTimeTest extends TestCase
 
     public function providerDateTimeInInterval()
     {
-        return array(
-            array('-1 year', '+5 days', true),
-            array('-1 day', '-1 hour', false),
-            array('-1 day', '+1 hour', true),
-        );
+        return [
+            [
+                '-1 year',
+                '+5 days',
+                true,
+            ],
+            [
+                '-1 day',
+                '-1 hour',
+                false,
+            ],
+            [
+                '-1 day',
+                '+1 hour',
+                true,
+            ],
+        ];
     }
 
     public function testFixedSeedWithMaximumTimestamp()
@@ -258,7 +282,7 @@ final class DateTimeTest extends TestCase
         $dateTimeThisYear = DateTimeProvider::dateTimeThisYear($max);
         mt_srand();
 
-        //regenerate Random Date with same seed and same maximum end timestamp
+        // regenerate Random Date with same seed and same maximum end timestamp
         mt_srand(1);
         $this->assertEquals($unixTime, DateTimeProvider::unixTime($max));
         $this->assertEquals($datetimeAD, DateTimeProvider::dateTimeAD($max));

@@ -1,27 +1,26 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker\Provider;
 
 class Address extends Base
 {
-    protected static $citySuffix = array('Ville');
-    protected static $streetSuffix = array('Street');
-    protected static $cityFormats = array(
-        '{{firstName}}{{citySuffix}}',
-    );
-    protected static $streetNameFormats = array(
-        '{{lastName}} {{streetSuffix}}'
-    );
-    protected static $streetAddressFormats = array(
-        '{{buildingNumber}} {{streetName}}'
-    );
-    protected static $addressFormats = array(
-        '{{streetAddress}} {{postcode}} {{city}}',
-    );
+    protected static $citySuffix = ['Ville'];
 
-    protected static $buildingNumber = array('%#');
-    protected static $postcode = array('#####');
-    protected static $country = array();
+    protected static $streetSuffix = ['Street'];
+
+    protected static $cityFormats = ['{{firstName}}{{citySuffix}}'];
+
+    protected static $streetNameFormats = ['{{lastName}} {{streetSuffix}}'];
+
+    protected static $streetAddressFormats = ['{{buildingNumber}} {{streetName}}'];
+
+    protected static $addressFormats = ['{{streetAddress}} {{postcode}} {{city}}'];
+
+    protected static $buildingNumber = ['%#'];
+
+    protected static $postcode = ['#####'];
+
+    protected static $country = [];
 
     /**
      * @example 'town'
@@ -131,9 +130,9 @@ class Address extends Base
      */
     public static function localCoordinates()
     {
-        return array(
+        return [
             'latitude' => static::latitude(),
-            'longitude' => static::longitude()
-        );
+            'longitude' => static::longitude(),
+        ];
     }
 }

@@ -1,15 +1,14 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker\Test\Provider;
 
-use Faker\Generator;
 use Faker\Calculator\Luhn;
+use Faker\Generator;
 use Faker\Provider\PhoneNumber;
 use PHPUnit\Framework\TestCase;
 
 final class PhoneNumberTest extends TestCase
 {
-
     /**
      * @var Generator
      */

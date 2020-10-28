@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker;
 
@@ -136,8 +136,8 @@ use Faker\Provider\Base;
  * @property string $countryISOAlpha3
  * @property string $languageCode
  * @property string $currencyCode
- * @property boolean $boolean
- * @method boolean boolean($chanceOfGettingTrue = 50)
+ * @property bool $boolean
+ * @method bool boolean($chanceOfGettingTrue = 50)
  *
  * @property int    $randomDigit
  * @property int    $randomDigitNot
@@ -165,7 +165,7 @@ use Faker\Provider\Base;
  * @method Generator valid($validator = null, $maxRetries = 10000)
  * @method mixed passthrough($passthrough)
  *
- * @method integer biasedNumberBetween($min = 0, $max = 100, $function = 'sqrt')
+ * @method int biasedNumberBetween($min = 0, $max = 100, $function = 'sqrt')
  *
  * @property string $macProcessor
  * @property string $linuxProcessor
@@ -197,11 +197,11 @@ use Faker\Provider\Base;
  * @property string $colorName
  *
  * @method string randomHtml($maxDepth = 4, $maxWidth = 4)
- *
  */
 class Generator
 {
     protected array $providers = [];
+
     protected array $formatters = [];
 
     public function addProvider(Base $provider): void
@@ -214,7 +214,7 @@ class Generator
         return $this->providers;
     }
 
-    public function seed(int $seed = null): void
+    public function seed(?int $seed = null): void
     {
         if ($seed === null) {
             mt_srand();
@@ -240,7 +240,10 @@ class Generator
 
         foreach ($this->providers as $provider) {
             if (method_exists($provider, $formatter)) {
-                $this->formatters[$formatter] = [$provider, $formatter];
+                $this->formatters[$formatter] = [
+                    $provider,
+                    $formatter,
+                ];
 
                 return $this->formatters[$formatter];
             }
@@ -254,7 +257,7 @@ class Generator
      */
     public function parse(string $string): string
     {
-        return (string) preg_replace_callback('/\{\{\s?(\w+)\s?\}\}/u', array($this, 'callFormatWithMatches'), $string);
+        return (string) preg_replace_callback('/\{\{\s?(\w+)\s?\}\}/u', [$this, 'callFormatWithMatches'], $string);
     }
 
     protected function callFormatWithMatches(array $matches)

@@ -1,8 +1,9 @@
-<?php
+<?php declare(strict_types = 1);
+
 namespace Faker\Test\Provider;
 
-use Faker\Provider\en_US\Text;
 use Faker\Generator;
+use Faker\Provider\en_US\Text;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 

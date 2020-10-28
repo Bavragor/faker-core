@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker\Calculator;
 
@@ -17,16 +17,17 @@ class TCNo
      */
     public static function checksum($identityPrefix)
     {
-        if (strlen((string)$identityPrefix) !== 9) {
+        if (strlen((string) $identityPrefix) !== 9) {
             throw new InvalidArgumentException('Argument should be an integer and should be 9 digits.');
         }
 
         $oddSum = 0;
         $evenSum = 0;
 
-        $identityArray = array_map('intval', str_split($identityPrefix)); // Creates array from int
+        $identityArray = array_map('intval', str_split((string) $identityPrefix));
+// Creates array from int
         foreach ($identityArray as $index => $digit) {
-            if ($index % 2 == 0) {
+            if ($index % 2 === 0) {
                 $evenSum += $digit;
             } else {
                 $oddSum += $digit;
@@ -43,7 +44,7 @@ class TCNo
      * Checks whether a TCNo has a valid checksum
      *
      * @param string $tcNo
-     * @return boolean
+     * @return bool
      */
     public static function isValid($tcNo)
     {

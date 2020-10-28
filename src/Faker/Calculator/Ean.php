@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker\Calculator;
 
@@ -42,7 +42,7 @@ class Ean
      * the checksum is correct.
      *
      * @param string $ean An EAN number
-     * @return boolean
+     * @return bool
      */
     public static function isValid($ean)
     {

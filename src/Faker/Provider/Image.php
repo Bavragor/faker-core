@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker\Provider;
 
@@ -7,10 +7,21 @@ namespace Faker\Provider;
  */
 class Image extends Base
 {
-    protected static $categories = array(
-        'abstract', 'animals', 'business', 'cats', 'city', 'food', 'nightlife',
-        'fashion', 'people', 'nature', 'sports', 'technics', 'transport'
-    );
+    protected static $categories = [
+        'abstract',
+        'animals',
+        'business',
+        'cats',
+        'city',
+        'food',
+        'nightlife',
+        'fashion',
+        'people',
+        'nature',
+        'sports',
+        'technics',
+        'transport',
+    ];
 
     /**
      * Generate the URL that will return a random image
@@ -19,8 +30,8 @@ class Image extends Base
      *
      * @example 'http://lorempixel.com/640/480/?12345'
      *
-     * @param integer $width
-     * @param integer $height
+     * @param int $width
+     * @param int $height
      * @param string|null $category
      * @param bool $randomize
      * @param string|null $word
@@ -30,11 +41,11 @@ class Image extends Base
      */
     public static function imageUrl($width = 640, $height = 480, $category = null, $randomize = true, $word = null, $gray = false)
     {
-        $baseUrl = "https://lorempixel.com/";
+        $baseUrl = 'https://lorempixel.com/';
         $url = "{$width}/{$height}/";
 
         if ($gray) {
-            $url = "gray/" . $url;
+            $url = 'gray/' . $url;
         }
 
         if ($category) {
@@ -63,7 +74,8 @@ class Image extends Base
      */
     public static function image($dir = null, $width = 640, $height = 480, $category = null, $fullPath = true, $randomize = true, $word = null, $gray = false)
     {
-        $dir = is_null($dir) ? sys_get_temp_dir() : $dir; // GNU/Linux / OS X / Windows compatible
+        $dir = is_null($dir) ? sys_get_temp_dir() : $dir;
+// GNU/Linux / OS X / Windows compatible
         // Validate directory path
         if (!is_dir($dir) || !is_writable($dir)) {
             throw new \InvalidArgumentException(sprintf('Cannot write to directory "%s"', $dir));

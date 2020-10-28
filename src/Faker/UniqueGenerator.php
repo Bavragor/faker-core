@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker;
 
@@ -9,7 +9,9 @@ namespace Faker;
 class UniqueGenerator
 {
     protected Generator $generator;
+
     protected int $maxRetries;
+
     protected array $uniques = [];
 
     public function __construct(Generator $generator, int $maxRetries = 10000)
@@ -20,6 +22,7 @@ class UniqueGenerator
 
     /**
      * Catch and proxy all generator calls but return only unique values
+     *
      * @param string $attribute
      * @return mixed
      */
@@ -30,18 +33,19 @@ class UniqueGenerator
 
     /**
      * Catch and proxy all generator calls with arguments but return only unique values
+     *
      * @return mixed
      */
     public function __call(string $name, array $arguments)
     {
         if (!isset($this->uniques[$name])) {
-            $this->uniques[$name] = array();
+            $this->uniques[$name] = [];
         }
 
         $i = 0;
 
         do {
-            $res = call_user_func_array(array($this->generator, $name), $arguments);
+            $res = call_user_func_array([$this->generator, $name], $arguments);
 
             $i++;
 
@@ -50,7 +54,7 @@ class UniqueGenerator
             }
         } while (array_key_exists(serialize($res), $this->uniques[$name]));
 
-        $this->uniques[$name][serialize($res)]= null;
+        $this->uniques[$name][serialize($res)] = null;
 
         return $res;
     }

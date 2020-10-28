@@ -1,10 +1,32 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker\Provider;
 
 class DateTime extends Base
 {
-    protected static $century = array('I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX','XXI');
+    protected static $century = [
+        'I',
+        'II',
+        'III',
+        'IV',
+        'V',
+        'VI',
+        'VII',
+        'VIII',
+        'IX',
+        'X',
+        'XI',
+        'XII',
+        'XIII',
+        'XIV',
+        'XV',
+        'XVI',
+        'XVII',
+        'XVIII',
+        'XIX',
+        'XX',
+        'XXI',
+    ];
 
     protected static $defaultTimezone = null;
 
@@ -68,7 +90,7 @@ class DateTime extends Base
      */
     public static function dateTimeAD($max = 'now', $timezone = null)
     {
-        $min = (PHP_INT_SIZE>4 ? -62135597361 : -PHP_INT_MAX);
+        $min = (PHP_INT_SIZE > 4 ? -62135597361 : -PHP_INT_MAX);
         return static::setTimezone(
             new \DateTime('@' . mt_rand($min, static::getMaxTimestamp($max))),
             $timezone
@@ -163,7 +185,7 @@ class DateTime extends Base
         $otherDatetime->add($intervalObject);
 
         $begin = $datetime > $otherDatetime ? $otherDatetime : $datetime;
-        $end = $datetime===$begin ? $otherDatetime : $datetime;
+        $end = $datetime === $begin ? $otherDatetime : $datetime;
 
         return static::dateTimeBetween(
             $begin,

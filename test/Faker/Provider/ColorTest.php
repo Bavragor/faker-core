@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker\Test\Provider;
 
@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 final class ColorTest extends TestCase
 {
-
     public function testHexColor()
     {
         $this->assertMatchesRegularExpression('/^#[a-f0-9]{6}$/i', Color::hexColor());

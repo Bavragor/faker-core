@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker\Provider;
 
@@ -20,13 +20,19 @@ class Barcode extends Base
      *
      * @param string $input
      *
-     * @return integer
+     * @return int
      */
     protected static function eanChecksum($input)
     {
-        $sequence = (strlen($input) + 1) === 8 ? array(3, 1) : array(1, 3);
+        $sequence = (strlen($input) + 1) === 8 ? [
+            3,
+            1,
+        ] : [
+            1,
+            3,
+        ];
         $sums = 0;
-        foreach (str_split($input) as $n => $digit) {
+        foreach (str_split((string) $input) as $n => $digit) {
             $sums += $digit * $sequence[$n % 2];
         }
         return (10 - $sums % 10) % 10;
@@ -34,12 +40,13 @@ class Barcode extends Base
 
     /**
      * ISBN-10 check digit
+     *
      * @link http://en.wikipedia.org/wiki/International_Standard_Book_Number#ISBN-10_check_digits
      *
      * @param  string           $input ISBN without check-digit
      * @throws \LengthException When wrong input length passed
      *
-     * @return integer Check digit
+     * @return int Check digit
      */
     protected static function isbnChecksum($input)
     {
@@ -51,7 +58,7 @@ class Barcode extends Base
             throw new \LengthException(sprintf('Input length should be equal to %d', $length));
         }
 
-        $digits = str_split($input);
+        $digits = str_split((string) $input);
         array_walk(
             $digits,
             function (&$digit, $position) {
@@ -61,11 +68,12 @@ class Barcode extends Base
         $result = (11 - array_sum($digits) % 11) % 11;
 
         // 10 is replaced by X
-        return ($result < 10)?$result:'X';
+        return ($result < 10) ? $result : 'X';
     }
 
     /**
      * Get a random EAN13 barcode.
+     *
      * @return string
      * @example '4006381333931'
      */
@@ -76,6 +84,7 @@ class Barcode extends Base
 
     /**
      * Get a random EAN8 barcode.
+     *
      * @return string
      * @example '73513537'
      */
@@ -86,6 +95,7 @@ class Barcode extends Base
 
     /**
      * Get a random ISBN-10 code
+     *
      * @link http://en.wikipedia.org/wiki/International_Standard_Book_Number
      *
      * @return string
@@ -100,6 +110,7 @@ class Barcode extends Base
 
     /**
      * Get a random ISBN-13 code
+     *
      * @link http://en.wikipedia.org/wiki/International_Standard_Book_Number
      *
      * @return string

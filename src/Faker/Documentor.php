@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker;
 
@@ -27,7 +27,7 @@ class Documentor
             $reflectionObject = new \ReflectionObject($provider);
 
             foreach ($reflectionObject->getMethods(\ReflectionMethod::IS_PUBLIC) as $reflectionMethod) {
-                if ($reflectionMethod->getDeclaringClass()->getName() == 'Faker\Provider\Base' && $providerClass != 'Faker\Provider\Base') {
+                if ($reflectionMethod->getDeclaringClass()->getName() === 'Faker\Provider\Base' && $providerClass !== 'Faker\Provider\Base') {
                     continue;
                 }
 
@@ -46,7 +46,7 @@ class Documentor
                         $parameter .= ' = ' . var_export($reflectionParameter->getDefaultValue(), true);
                     }
 
-                    $parameters [] = $parameter;
+                    $parameters[] = $parameter;
                 }
 
                 $parameters = $parameters ? '('. join(', ', $parameters) . ')' : '';
@@ -61,7 +61,8 @@ class Documentor
                     $example = "array('". join("', '", $example) . "')";
                 } elseif ($example instanceof \DateTime) {
                     $example = "DateTime('" . $example->format('Y-m-d H:i:s') . "')";
-                } elseif ($example instanceof Generator || $example instanceof UniqueGenerator) { // modifier
+                } elseif ($example instanceof Generator || $example instanceof UniqueGenerator) {
+// modifier
                     $example = '';
                 } else {
                     $example = var_export($example, true);

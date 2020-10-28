@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker\Provider;
 
@@ -7,37 +7,39 @@ class Person extends Base
     const GENDER_MALE = 'male';
     const GENDER_FEMALE = 'female';
 
-    protected static $titleFormat = array(
-      '{{titleMale}}',
-      '{{titleFemale}}',
-    );
+    protected static $titleFormat = [
+        '{{titleMale}}',
+        '{{titleFemale}}',
+    ];
 
-    protected static $firstNameFormat = array(
-      '{{firstNameMale}}',
-      '{{firstNameFemale}}',
-    );
+    protected static $firstNameFormat = [
+        '{{firstNameMale}}',
+        '{{firstNameFemale}}',
+    ];
 
-    protected static $maleNameFormats = array(
-        '{{firstNameMale}} {{lastName}}',
-    );
+    protected static $maleNameFormats = ['{{firstNameMale}} {{lastName}}'];
 
-    protected static $femaleNameFormats = array(
-        '{{firstNameFemale}} {{lastName}}',
-    );
+    protected static $femaleNameFormats = ['{{firstNameFemale}} {{lastName}}'];
 
-    protected static $firstNameMale = array(
-        'John',
-    );
+    protected static $firstNameMale = ['John'];
 
-    protected static $firstNameFemale = array(
-        'Jane',
-    );
+    protected static $firstNameFemale = ['Jane'];
 
-    protected static $lastName = array('Doe');
+    protected static $lastName = ['Doe'];
 
-    protected static $titleMale = array('Mr.', 'Dr.', 'Prof.');
+    protected static $titleMale = [
+        'Mr.',
+        'Dr.',
+        'Prof.',
+    ];
 
-    protected static $titleFemale = array('Mrs.', 'Ms.', 'Miss', 'Dr.', 'Prof.');
+    protected static $titleFemale = [
+        'Mrs.',
+        'Ms.',
+        'Miss',
+        'Dr.',
+        'Prof.',
+    ];
 
     /**
      * @param string|null $gender 'male', 'female' or null for any

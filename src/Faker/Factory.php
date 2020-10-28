@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker;
 
@@ -6,7 +6,26 @@ class Factory
 {
     public const DEFAULT_LOCALE = 'en_US';
 
-    protected static array $defaultProviders = ['Address', 'Barcode', 'Biased', 'Color', 'Company', 'DateTime', 'File', 'HtmlLorem', 'Image', 'Internet', 'Lorem', 'Miscellaneous', 'Payment', 'Person', 'PhoneNumber', 'Text', 'UserAgent', 'Uuid'];
+    protected static array $defaultProviders = [
+        'Address',
+        'Barcode',
+        'Biased',
+        'Color',
+        'Company',
+        'DateTime',
+        'File',
+        'HtmlLorem',
+        'Image',
+        'Internet',
+        'Lorem',
+        'Miscellaneous',
+        'Payment',
+        'Person',
+        'PhoneNumber',
+        'Text',
+        'UserAgent',
+        'Uuid',
+    ];
 
     /**
      * Create a new generator

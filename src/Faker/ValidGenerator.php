@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker;
 
@@ -9,7 +9,9 @@ namespace Faker;
 class ValidGenerator
 {
     protected Generator $generator;
+
     protected $validator;
+
     protected int $maxRetries;
 
     public function __construct(Generator $generator, ?callable $validator = null, int $maxRetries = 10000)
@@ -39,6 +41,7 @@ class ValidGenerator
 
     /**
      * Catch and proxy all generator calls with arguments but return only valid values
+     *
      * @param string $name
      * @param array $arguments
      *
@@ -49,7 +52,7 @@ class ValidGenerator
         $i = 0;
 
         do {
-            $res = call_user_func_array(array($this->generator, $name), $arguments);
+            $res = call_user_func_array([$this->generator, $name], $arguments);
 
             $i++;
 

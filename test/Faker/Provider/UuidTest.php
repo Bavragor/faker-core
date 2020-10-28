@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker\Test\Provider;
 
@@ -16,13 +16,13 @@ final class UuidTest extends TestCase
 
     public function testUuidExpectedSeed()
     {
-        if (pack('L', 0x6162797A) == pack('N', 0x6162797A)) {
+        if (pack('L', 0x6162797A) === pack('N', 0x6162797A)) {
             $this->markTestSkipped('Big Endian');
         }
         $faker = new Generator();
         $faker->seed(123);
-        $this->assertEquals("8e2e0c84-50dd-367c-9e66-f3ab455c78d6", BaseProvider::uuid());
-        $this->assertEquals("073eb60a-902c-30ab-93d0-a94db371f6c8", BaseProvider::uuid());
+        $this->assertEquals('8e2e0c84-50dd-367c-9e66-f3ab455c78d6', BaseProvider::uuid());
+        $this->assertEquals('073eb60a-902c-30ab-93d0-a94db371f6c8', BaseProvider::uuid());
     }
 
     protected function isUuid($uuid)

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker\Calculator;
 
@@ -27,7 +27,7 @@ class Luhn
             $sum += $number[$i];
         }
         for ($i = $length - 2; $i >= 0; $i -= 2) {
-            $sum += array_sum(str_split($number[$i] * 2));
+            $sum += array_sum(str_split((string) ($number[$i] * 2)));
         }
 
         return $sum % 10;
@@ -70,6 +70,6 @@ class Luhn
         if (!preg_match('/^\d+$/', $partialValue)) {
             throw new InvalidArgumentException('Argument should be an integer.');
         }
-        return $partialValue . Luhn::computeCheckDigit($partialValue);
+        return $partialValue . self::computeCheckDigit($partialValue);
     }
 }

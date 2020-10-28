@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Faker\Test\Provider;
 
@@ -76,7 +76,7 @@ final class ImageTest extends TestCase
     {
         $this->markTestSkipped('Skipped due to unstable service prior 1.9.0 release');
 
-        $url = "http://lorempixel.com/";
+        $url = 'http://lorempixel.com/';
         $curlPing = curl_init($url);
         curl_setopt($curlPing, CURLOPT_TIMEOUT, 5);
         curl_setopt($curlPing, CURLOPT_CONNECTTIMEOUT, 5);
@@ -86,7 +86,7 @@ final class ImageTest extends TestCase
         curl_close($curlPing);
 
         if ($httpCode < 200 | $httpCode > 300) {
-            $this->markTestSkipped("LoremPixel is offline, skipping image download");
+            $this->markTestSkipped('LoremPixel is offline, skipping image download');
         }
 
         $file = Image::image(sys_get_temp_dir());
