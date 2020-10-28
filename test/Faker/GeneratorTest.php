@@ -3,6 +3,7 @@
 namespace Faker\Test;
 
 use Faker\Generator;
+use Faker\Provider\Base;
 use PHPUnit\Framework\TestCase;
 
 final class GeneratorTest extends TestCase
@@ -10,44 +11,42 @@ final class GeneratorTest extends TestCase
     public function testAddProviderGivesPriorityToNewlyAddedProvider()
     {
         $generator = new Generator;
-        $generator->addProvider(new FooProvider());
-        $generator->addProvider(new BarProvider());
+        $generator->addProvider(new FooProvider($generator));
+        $generator->addProvider(new BarProvider($generator));
         $this->assertEquals('barfoo', $generator->format('fooFormatter'));
     }
 
     public function testGetFormatterReturnsCallable()
     {
         $generator = new Generator;
-        $provider = new FooProvider();
+        $provider = new FooProvider($generator);
         $generator->addProvider($provider);
-        $this->assertInternalType('callable', $generator->getFormatter('fooFormatter'));
+        $this->assertIsCallable($generator->getFormatter('fooFormatter'));
     }
 
     public function testGetFormatterReturnsCorrectFormatter()
     {
         $generator = new Generator;
-        $provider = new FooProvider();
+        $provider = new FooProvider($generator);
         $generator->addProvider($provider);
         $expected = array($provider, 'fooFormatter');
         $this->assertEquals($expected, $generator->getFormatter('fooFormatter'));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testGetFormatterThrowsExceptionOnIncorrectProvider()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $generator = new Generator;
         $generator->getFormatter('fooFormatter');
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testGetFormatterThrowsExceptionOnIncorrectFormatter()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $generator = new Generator;
-        $provider = new FooProvider();
+        $provider = new FooProvider($generator);
         $generator->addProvider($provider);
         $generator->getFormatter('barFormatter');
     }
@@ -55,7 +54,7 @@ final class GeneratorTest extends TestCase
     public function testFormatCallsFormatterOnProvider()
     {
         $generator = new Generator;
-        $provider = new FooProvider();
+        $provider = new FooProvider($generator);
         $generator->addProvider($provider);
         $this->assertEquals('foobar', $generator->format('fooFormatter'));
     }
@@ -63,7 +62,7 @@ final class GeneratorTest extends TestCase
     public function testFormatTransfersArgumentsToFormatter()
     {
         $generator = new Generator;
-        $provider = new FooProvider();
+        $provider = new FooProvider($generator);
         $generator->addProvider($provider);
         $this->assertEquals('bazfoo', $generator->format('fooFormatterWithArguments', array('foo')));
     }
@@ -77,7 +76,7 @@ final class GeneratorTest extends TestCase
     public function testParseReturnsStringWithTokensReplacedByFormatters()
     {
         $generator = new Generator();
-        $provider = new FooProvider();
+        $provider = new FooProvider($generator);
         $generator->addProvider($provider);
         $this->assertEquals('This is foobar a text with foobar', $generator->parse('This is {{fooFormatter}} a text with {{ fooFormatter }}'));
     }
@@ -85,7 +84,7 @@ final class GeneratorTest extends TestCase
     public function testMagicGetCallsFormat()
     {
         $generator = new Generator;
-        $provider = new FooProvider();
+        $provider = new FooProvider($generator);
         $generator->addProvider($provider);
         $this->assertEquals('foobar', $generator->fooFormatter);
     }
@@ -93,7 +92,7 @@ final class GeneratorTest extends TestCase
     public function testMagicCallCallsFormat()
     {
         $generator = new Generator;
-        $provider = new FooProvider();
+        $provider = new FooProvider($generator);
         $generator->addProvider($provider);
         $this->assertEquals('foobar', $generator->fooFormatter());
     }
@@ -101,7 +100,7 @@ final class GeneratorTest extends TestCase
     public function testMagicCallCallsFormatWithArguments()
     {
         $generator = new Generator;
-        $provider = new FooProvider();
+        $provider = new FooProvider($generator);
         $generator->addProvider($provider);
         $this->assertEquals('bazfoo', $generator->fooFormatterWithArguments('foo'));
     }
@@ -126,7 +125,7 @@ final class GeneratorTest extends TestCase
     }
 }
 
-final class FooProvider
+final class FooProvider extends Base
 {
     public function fooFormatter()
     {
@@ -139,7 +138,7 @@ final class FooProvider
     }
 }
 
-final class BarProvider
+final class BarProvider extends Base
 {
     public function fooFormatter()
     {

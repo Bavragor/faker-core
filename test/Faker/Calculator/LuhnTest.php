@@ -3,6 +3,7 @@
 namespace Faker\Test\Calculator;
 
 use Faker\Calculator\Luhn;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 final class LuhnTest extends TestCase
@@ -31,7 +32,7 @@ final class LuhnTest extends TestCase
      */
     public function testComputeCheckDigit($partialNumber, $checkDigit)
     {
-        $this->assertInternalType('string', $checkDigit);
+        $this->assertIsString($checkDigit);
         $this->assertEquals($checkDigit, Luhn::computeCheckDigit($partialNumber));
     }
 
@@ -61,12 +62,11 @@ final class LuhnTest extends TestCase
         $this->assertEquals($isValid, Luhn::isValid($number));
     }
 
-    /**
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Argument should be an integer.
-     */
     public function testGenerateLuhnNumberWithInvalidPrefix()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Argument should be an integer.');
+
         Luhn::generateLuhnNumber('abc');
     }
 }

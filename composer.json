@@ -16,13 +16,21 @@
             "name": "Kevin Mauel"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Bavragor/faker-en-us.git"
+        }
+    ],
     "require": {
         "php": "^7.4 || ^8.0",
-        "bavragor/faker-en-US": "^1.0"
+        "bavragor/faker-en-us": "dev-master"
     },
     "require-dev": {
         "ext-intl": "*",
+        "phpcompatibility/php-compatibility": "^9.3",
         "phpunit/phpunit": "^9.4",
+        "slevomat/coding-standard": "^6.4",
         "squizlabs/php_codesniffer": "^3.5.8"
     },
     "autoload": {
